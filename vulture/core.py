@@ -223,7 +223,7 @@ class Vulture(ast.NodeVisitor):
                 module_string = module_data.decode("utf-8")
                 self.scan(module_string, filename=path)
 
-    def get_unused_code(self):
+    def get_dead_code(self):
         """
         Return ordered list of unused Item objects.
         """
@@ -361,6 +361,11 @@ class Vulture(ast.NodeVisitor):
         for param in [node.args.vararg, node.args.kwarg]:
             if param and isinstance(param, str):
                 self._define_variable(param, node.lineno)
+
+        for unreachable_node in utils.return_nodes_after_return(node):
+            setattr(unreachable_node, 'name', getattr(node, 'name', None))
+            self.code_after_return.append(self._get_item(unreachable_node,
+                                          'code after return'))
 
     def visit_Import(self, node):
         self._add_aliases(node)
