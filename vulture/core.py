@@ -223,7 +223,7 @@ class Vulture(ast.NodeVisitor):
                 module_string = module_data.decode("utf-8")
                 self.scan(module_string, filename=path)
 
-    def get_dead_code(self):
+    def get_unused_code(self):
         """
         Return ordered list of unused Item objects.
         """
@@ -243,13 +243,12 @@ class Vulture(ast.NodeVisitor):
         """
         Print ordered list of Item objects to stdout.
         """
-        for item in self.get_dead_code():
+        for item in self.get_unused_code():
             if self.sort_by_size:
                 line_format = 'line' if item.size == 1 else 'lines'
                 size_report = ' ({0:d} {1})'.format(item.size, line_format)
             else:
                 size_report = ''
-
             print("{0}:{1:d}: {2}{3}".format(
                 utils.format_path(item.filename), item.lineno, item.message,
                 size_report))
