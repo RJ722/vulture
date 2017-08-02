@@ -243,7 +243,7 @@ class Vulture(ast.NodeVisitor):
         """
         Print ordered list of Item objects to stdout.
         """
-        for item in self.get_unused_code():
+        for item in self.get_dead_code():
             if self.sort_by_size:
                 line_format = 'line' if item.size == 1 else 'lines'
                 size_report = ' ({0:d} {1})'.format(item.size, line_format)
@@ -361,11 +361,6 @@ class Vulture(ast.NodeVisitor):
         for param in [node.args.vararg, node.args.kwarg]:
             if param and isinstance(param, str):
                 self._define_variable(param, node.lineno)
-
-        for unreachable_node in utils.return_nodes_after_return(node):
-            setattr(unreachable_node, 'name', getattr(node, 'name', None))
-            self.code_after_return.append(self._get_item(unreachable_node,
-                                          'code after return'))
 
     def visit_Import(self, node):
         self._add_aliases(node)
