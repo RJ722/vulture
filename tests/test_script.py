@@ -50,3 +50,11 @@ def test_min_confidence():
     assert call_vulture([
         'vulture/core.py', '--exclude', 'whitelists',
         '--min-confidence', '100']) == 0
+
+
+def test_exclude():
+    assert call_vulture([
+        'vulture/', '--exclude', 'vulture/core.py,vulture/utils.py']) == 1
+    assert call_vulture([
+        'vulture/', '--exclude',
+        'vulture/core.py,vulture/utils.py,vulture/lines.py']) == 0
