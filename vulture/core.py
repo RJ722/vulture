@@ -129,9 +129,6 @@ class Item(object):
     def _tuple(self):
         return (self.filename, self.first_lineno, self.name)
 
-    def __repr__(self):
-        return repr(self.name)
-
     def __eq__(self, other):
         return self._tuple() == other._tuple()
 
