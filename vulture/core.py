@@ -514,7 +514,9 @@ def _parse_args():
         ' unused functions and classes by their lines of code')
     parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('--version', action='version', version=version)
-    return parser.parse_args()
+    args = parser.parse_args()
+    print(args)
+    return args
 
 
 def main():
