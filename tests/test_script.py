@@ -44,6 +44,7 @@ def test_pyc():
 
 def test_sort_by_size():
     assert call_vulture(['vulture/utils.py', '--sort-by-size']) == 1
+    assert False
 
 
 def test_min_confidence():
@@ -53,8 +54,12 @@ def test_min_confidence():
 
 
 def test_exclude():
+    def mix_path(filenames):
+        return ",".join(
+            [os.path.join('vulture', filename) for filename in filenames])
+
     assert call_vulture([
-        'vulture/', '--exclude', 'vulture/core.py,vulture/utils.py']) == 1
+        'vulture/', '--exclude', mix_path(['core.py', 'utils.py'])]) == 1
     assert call_vulture([
         'vulture/', '--exclude',
-        'vulture/core.py,vulture/utils.py,vulture/lines.py']) == 0
+        mix_path(['core.py', 'utils.py', 'lines.py'])]) == 0
