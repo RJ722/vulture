@@ -38,5 +38,6 @@ foo()
         f.write(codecs.BOM_UTF16_LE)
         f.write(code.encode('utf_16_le'))
         f.flush()  # Ensure that the file is actually written on disk.
+        f.seek(0)  # Rewind the file object for Vulture.
         v.scavenge([f.name])
         assert v.found_dead_code_or_error
