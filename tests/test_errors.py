@@ -1,9 +1,10 @@
 import codecs
+import os.path
 import tempfile
 
 import pytest
 
-from . import v
+from . import v, REPO
 assert v  # Silence pyflakes.
 
 
@@ -33,9 +34,11 @@ def foo():
 
 foo()
 """
-    with tempfile.NamedTemporaryFile(mode='wb', suffix='.py') as f:
+    tests = os.path.join(REPO, 'tests')
+    with tempfile.NamedTemporaryFile(mode='wb', suffix='.py', dir=tests) as f:
         f.write(codecs.BOM_UTF16_LE)
         f.write(code.encode('utf_16_le'))
         f.flush()  # Ensure that the file is actually written to disk.
+        print(f.name)
         v.scavenge([f.name])
     assert v.found_dead_code_or_error
