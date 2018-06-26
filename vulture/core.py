@@ -29,7 +29,6 @@ from __future__ import print_function
 import argparse
 import ast
 from fnmatch import fnmatchcase
-from lxml import etree
 import os.path
 import pkgutil
 import re
@@ -38,6 +37,7 @@ import sys
 
 from vulture import lines
 from vulture import utils
+from vulture.make_whitelist import make_whitelist
 
 __version__ = '0.27'
 
@@ -507,7 +507,11 @@ def _parse_args():
         ' (*, ?, [, ]). Treat PATTERNs without globbing characters as'
         ' *PATTERN*.')
     parser.add_argument(
-        '--make-whitelist', help='Path to xml report by coverage.py.')
+        '--make-whitelist', help='Path to coverage.py XML report. Using this'
+        ' option outputs code that Vulture considers unused, but which is'
+        ' marked as used in the XML file. To ignore these false-positives,'
+        ' insert them into a new file and add the file to the list of Vulture'
+        ' input files.')
     parser.add_argument(
         '--min-confidence', type=int, default=0,
         help='Minimum confidence (between 0 and 100) for code to be'
@@ -518,40 +522,6 @@ def _parse_args():
     parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('--version', action='version', version=version)
     return parser.parse_args()
-
-
-def create_namewise_dict(v):
-    namewise_unused_funcs = {}
-    for item in v.unused_funcs:
-        filename = utils.format_path(item.filename)
-        temp = namewise_unused_funcs.get(filename, [])
-        temp.append(item)
-        namewise_unused_funcs[filename] = temp
-    return namewise_unused_funcs
-
-
-def make_whitelist(v, xml):
-    def by_name(item):
-        return (item.filename.lower(), item.first_lineno)
-
-    xpath_file = ('/coverage/packages/package/classes/class/@filename')
-    with open(xml) as f:
-        tree = etree.parse(f)
-    files = [filename for filename in tree.xpath(xpath_file)]
-    namewise_unused_funcs = create_namewise_dict(v)
-    for filename in files:
-        xpath = ('/coverage/packages/package/classes/class[@filename="{}"]'
-                 '/lines/line[@hits="1"]/@number').format(filename)
-        lines_hit = [int(lineno) for lineno in tree.xpath(xpath)]
-        unused_funcs = namewise_unused_funcs.get(filename, [])
-        if unused_funcs:
-            print("# " + filename)
-        for item in unused_funcs:
-            span = item.first_lineno+1, item.last_lineno+1
-            for lineno in range(*span):
-                if lineno in lines_hit:
-                    print(item.name)
-                    break
 
 
 def main():
