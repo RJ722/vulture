@@ -11,10 +11,10 @@ def check_whitelist(code, expected_output, v, tmpdir, capsys):
     xml = str(tmpdir.join("coverage.xml"))
     with open(sample, 'w') as f:
         f.write(code)
-    with capsys.disabled():
-        subprocess.call(["coverage", "run", sample])
-        subprocess.call(["coverage", "xml", "-o", xml])
-        v.scavenge([sample])
+    subprocess.call(["coverage", "run", sample])
+    subprocess.call(["coverage", "xml", "-o", xml])
+    v.scavenge([sample])
+    capsys.readouterr()  # Flush output from coverage run 
     make_whitelist(v, xml)
     assert capsys.readouterr().out == expected_output.format(sample)
 
