@@ -10,6 +10,16 @@ def call_vulture(args, **kwargs):
         [sys.executable, '-m', 'vulture'] + args, cwd=REPO, **kwargs)
 
 
+def call_coverage(args, **kwargs):
+    return subprocess.call(
+        [sys.executable, '-m', 'coverage'] + args, cwd=REPO, **kwargs)
+
+
+def capture_vulture_out(args, **kwargs):
+    return subprocess.check_output(
+        [sys.executable, '-m', 'vulture'] + args, cwd=REPO, **kwargs)
+
+
 def test_module_with_explicit_whitelists():
     assert call_vulture(['vulture/'] + WHITELISTS) == 0
 
@@ -57,4 +67,21 @@ def test_exclude():
         return call_vulture(['vulture/', '--exclude', get_csv(excludes)])
 
     assert call_vulture_with_excludes(['core.py', 'utils.py']) == 1
-    assert call_vulture_with_excludes(['core.py', 'utils.py', 'lines.py']) == 0
+    assert call_vulture_with_excludes([
+        'core.py', 'utils.py', 'lines.py', 'make_whitelist.py']) == 0
+
+
+def test_make_whitelist(tmpdir):
+    xml = str(tmpdir.join("coverage.xml"))
+    whitelist = str(tmpdir.join("tmp_whitelist.py"))
+    call_coverage(["run", "-m", "vulture", "vulture/", "tests/"])
+    call_coverage(["xml", "-o", xml])
+    content = capture_vulture_out([
+        '--make-whitelist', xml, '--exclude', 'whitelists',
+        'vulture/', 'tests/'])
+    with open(whitelist, 'w') as f:
+        f.write(content.decode("utf-8"))
+        # Add false positives on which coverage is tricked
+        f.write("visit_arg\n")
+        f.write("visit_AsyncFunctionDef")
+    assert call_vulture(['--exclude', 'whitelists', 'vulture', whitelist]) == 0
