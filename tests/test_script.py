@@ -74,11 +74,11 @@ def test_exclude():
 def test_make_whitelist(tmpdir):
     xml = str(tmpdir.join("coverage.xml"))
     whitelist = str(tmpdir.join("tmp_whitelist.py"))
-    call_coverage(["run", "-m", "vulture", "vulture/", "tests/"])
+    call_coverage(["run", "-m", "vulture", "vulture", "tests"])
     call_coverage(["xml", "-o", xml])
     content = capture_vulture_out([
         '--make-whitelist', xml, '--exclude', 'whitelists',
-        'vulture/', 'tests/'])
+        'vulture', 'tests'])
     with open(whitelist, 'w') as f:
         f.write(content.decode("utf-8"))
         # Add false positives on which coverage is tricked
