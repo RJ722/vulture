@@ -76,6 +76,9 @@ def test_make_whitelist(tmpdir):
     whitelist = str(tmpdir.join("tmp_whitelist.py"))
     call_coverage(["run", "-m", "vulture", "vulture", "tests"])
     call_coverage(["xml", "-o", xml])
+    # print("DARTH VADER: FINAL XML: ")
+    with open(xml, 'r') as f:
+        print(f.read())
     content = capture_vulture_out([
         '--make-whitelist', xml, '--exclude', 'whitelists',
         'vulture', 'tests'])
@@ -84,4 +87,7 @@ def test_make_whitelist(tmpdir):
         # Add false positives on which coverage is tricked
         f.write("visit_arg\n")
         f.write("visit_AsyncFunctionDef")
+    # print("THE FINAL WHITELIST: ")
+    # with open(whitelist, 'r') as f:
+    #    print(f.read())
     assert call_vulture(['--exclude', 'whitelists', 'vulture', whitelist]) == 0

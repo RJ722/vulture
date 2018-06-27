@@ -17,9 +17,15 @@ def check_whitelist(v, tmpdir, capsys):
         subprocess.call(["coverage", "run", sample])
         subprocess.call(["coverage", "xml", "-o", xml])
         v.scavenge([sample])
+        # with capsys.disabled():
+        #    print("coverage.xml: ")
+        #    with open(xml, 'r') as f:
+        #        print(f.read())
         capsys.readouterr()  # Flush output from coverage run
         make_whitelist(v, xml)
-        assert capsys.readouterr().out == expected_output.format(sample)
+        output = capsys.readouterr().out
+        print(output)
+        assert output == expected_output.format(sample)
     return check
 
 
