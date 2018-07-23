@@ -388,6 +388,11 @@ class Vulture(ast.NodeVisitor):
             self.defined_classes, node.name, node, ignore=_ignore_class)
 
     def visit_FunctionDef(self, node):
+        import random
+        if random.randrange(0, 2):
+            print("ello")
+        else:
+            print("something else")
         for decorator in node.decorator_list:
             if isinstance(decorator, ast.Call):
                 decorator = decorator.func
