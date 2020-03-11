@@ -16,5 +16,6 @@ exclude = '''
   | _build
   | build
   | dist
+  | /builds
 )/
 '''
