@@ -26,7 +26,7 @@ before_script:
 
 test:
   script:
-    - pip install pytest
+    - pip install coverage pytest pytest-cov
     - pytest --cov
     - coverage xml
     - curl https://deepsource.io/cli | sh
