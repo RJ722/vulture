@@ -696,7 +696,7 @@ def _parse_args():
     return parser.parse_args()
 
 
-def main():
+def main(*u_args, **u_kwargs):
     args = _parse_args()
     vulture = Vulture(
         verbose=args.verbose,
@@ -711,3 +711,7 @@ def main():
             make_whitelist=args.make_whitelist,
         )
     )
+
+import pdb; pdb.set_trace()
+
+import this
