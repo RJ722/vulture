@@ -27,19 +27,25 @@ def call_vulture(args, **kwargs):
 def check(items_or_names, expected_names):
     """items_or_names must be a collection of Items or a set of strings."""
     try:
-        assert sorted(item.name for item in items_or_names) == sorted(
+        if sorted(item.name for item in items_or_names) != sorted(
             expected_names
-        )
+        ):
+            raise AssertionError
     except AttributeError:
-        assert items_or_names == set(expected_names)
+        if items_or_names != set(expected_names):
+            raise AssertionError
 
 
 def check_unreachable(v, lineno, size, name):
-    assert len(v.unreachable_code) == 1
+    if len(v.unreachable_code) != 1:
+        raise AssertionError
     item = v.unreachable_code[0]
-    assert item.first_lineno == lineno
-    assert item.size == size
-    assert item.name == name
+    if item.first_lineno != lineno:
+        raise AssertionError
+    if item.size != size:
+        raise AssertionError
+    if item.name != name:
+        raise AssertionError
 
 
 @pytest.fixture

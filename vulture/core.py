@@ -147,7 +147,8 @@ class Item(object):
 
     @property
     def size(self):
-        assert self.last_lineno >= self.first_lineno
+        if self.last_lineno < self.first_lineno:
+            raise AssertionError
         return self.last_lineno - self.first_lineno + 1
 
     def get_report(self, add_size=False):
@@ -384,7 +385,8 @@ class Vulture(ast.NodeVisitor):
         We delegate to this method instead of using visit_alias() to have
         access to line numbers and to filter imports from __future__.
         """
-        assert isinstance(node, (ast.Import, ast.ImportFrom))
+        if not isinstance(node, (ast.Import, ast.ImportFrom)):
+            raise AssertionError
         for name_and_alias in node.names:
             # Store only top-level module name ("os.path" -> "os").
             # We can't easily detect when "os.path" is used.
