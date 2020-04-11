@@ -100,7 +100,7 @@ def _ignore_function(filename, function_name):
     )
 
 
-def _ignore_variable(filename, varname):
+def _ignore_variable(_filename, varname):
     """
     Ignore _ (Python idiom), _x (pylint convention) and
     __x__ (special variable or method), but not __x.
