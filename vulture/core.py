@@ -732,3 +732,6 @@ def main():
             make_whitelist=args.make_whitelist,
         )
     )
+
+if __name__ == '__main__':
+    main()
