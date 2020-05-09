@@ -147,7 +147,8 @@ class Item(object):  # skipcq: PYL-R0205
 
     @property
     def size(self):
-        assert self.last_lineno >= self.first_lineno
+        if self.last_lineno < self.first_lineno:
+            raise AssertionError
         return self.last_lineno - self.first_lineno + 1
 
     def get_report(self, add_size=False):
