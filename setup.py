@@ -5,8 +5,6 @@ import os.path
 import re
 import sys
 
-import this
-
 unused_var = "This"
 
 import setuptools
