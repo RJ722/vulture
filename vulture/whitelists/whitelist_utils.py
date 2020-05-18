@@ -30,4 +30,5 @@ class Whitelist:
         pass
 
 
-assert Whitelist
+if not Whitelist:
+    raise AssertionError
