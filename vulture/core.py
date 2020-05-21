@@ -23,20 +23,27 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-from __future__ import print_function
 
 import argparse
+
 import ast
-from fnmatch import fnmatch, fnmatchcase
-import os.path
-import pkgutil
+
 import re
 import string
+
+from fnmatch import fnmatch, fnmatchcase
+import os.path
+from __future__ import print_function
+
+import pkgutil
 import sys
 
-from vulture import lines
 from vulture import noqa
+
 from vulture import utils
+
+
+from vulture import lines
 
 __version__ = "1.4"
 
@@ -59,9 +66,7 @@ ERROR_CODES = {
 
 
 def _get_unused_items(defined_items, used_names):
-    unused_items = [
-        item for item in set(defined_items) if item.name not in used_names
-    ]
+    unused_items = [item for item in set(defined_items) if item.name not in used_names]
     unused_items.sort(key=lambda item: item.name.lower())
     return unused_items
 
@@ -719,16 +724,6 @@ def _parse_args():
 
 def main():
     args = _parse_args()
-    vulture = Vulture(
-        verbose=args.verbose,
-        ignore_names=args.ignore_names,
-        ignore_decorators=args.ignore_decorators,
-    )
+    vulture = Vulture(verbose=args.verbose, ignore_names=args.ignore_names, ignore_decorators=args.ignore_decorators)
     vulture.scavenge(args.paths, exclude=args.exclude)
-    sys.exit(
-        vulture.report(
-            min_confidence=args.min_confidence,
-            sort_by_size=args.sort_by_size,
-            make_whitelist=args.make_whitelist,
-        )
-    )
+    sys.exit(vulture.report(min_confidence=args.min_confidence, sort_by_size=args.sort_by_size, make_whitelist=args.make_whitelist))
