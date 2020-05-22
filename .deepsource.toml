@@ -27,3 +27,7 @@ enabled = true
 [[transformers]]
 name = "black"
 enabled = true
+
+[[transformers]]
+name = "isort"
+enabled = true
