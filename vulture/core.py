@@ -34,8 +34,10 @@ import (
 import re
 
 from fnmatch import fnmatch, fnmatchcase
-import os.path
 from __future__ import print_function
+
+
+import os.path
 
 import pkgutil
 import sys
