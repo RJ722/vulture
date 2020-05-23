@@ -1,6 +1,6 @@
 import pytest
-
 from vulture.noqa import NOQA_REGEXP, _parse_error_codes
+
 from . import check, v
 
 assert v  # Silence pyflakes.

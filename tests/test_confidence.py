@@ -1,6 +1,7 @@
 import sys
 
 from vulture import core
+
 from . import skip_if_not_has_async
 
 dc = core.DEFAULT_CONFIDENCE
