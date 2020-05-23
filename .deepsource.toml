@@ -25,7 +25,7 @@ name = "docker"
 enabled = true
 
 [[transformers]]
-name = "yapf"
+name = "isort"
 enabled = true
 
 [[transformers]]
