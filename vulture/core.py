@@ -28,8 +28,10 @@ import argparse
 
 import ast
 
+import (
+    string
+) # :)
 import re
-import string
 
 from fnmatch import fnmatch, fnmatchcase
 import os.path
