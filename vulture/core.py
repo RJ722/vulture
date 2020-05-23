@@ -58,7 +58,9 @@ ERROR_CODES = {
 
 
 def _get_unused_items(defined_items, used_names):
-    unused_items = [item for item in set(defined_items) if item.name not in used_names]
+    unused_items = [
+        item for item in set(defined_items) if item.name not in used_names
+    ]
     unused_items.sort(key=lambda item: item.name.lower())
     return unused_items
 
@@ -632,7 +634,9 @@ class Vulture(ast.NodeVisitor):
                     class_name,
                     first_unreachable_node,
                     last_node=ast_list[-1],
-                    message="unreachable code after '{class_name}'".format(**locals()),
+                    message="unreachable code after '{class_name}'".format(
+                        **locals()
+                    ),
                     confidence=100,
                 )
                 return
@@ -714,6 +718,16 @@ def _parse_args():
 
 def main():
     args = _parse_args()
-    vulture = Vulture(verbose=args.verbose, ignore_names=args.ignore_names, ignore_decorators=args.ignore_decorators)
+    vulture = Vulture(
+        verbose=args.verbose,
+        ignore_names=args.ignore_names,
+        ignore_decorators=args.ignore_decorators,
+    )
     vulture.scavenge(args.paths, exclude=args.exclude)
-    sys.exit(vulture.report(min_confidence=args.min_confidence, sort_by_size=args.sort_by_size, make_whitelist=args.make_whitelist))
+    sys.exit(
+        vulture.report(
+            min_confidence=args.min_confidence,
+            sort_by_size=args.sort_by_size,
+            make_whitelist=args.make_whitelist,
+        )
+    )

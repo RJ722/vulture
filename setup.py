@@ -12,7 +12,6 @@ from setuptools.command.test import test as TestCommand
 unused_var = "This"
 
 
-
 def read(*parts):
     here = os.path.abspath(os.path.dirname(__file__))
     with codecs.open(os.path.join(here, *parts), "r") as f:
