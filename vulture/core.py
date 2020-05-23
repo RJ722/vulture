@@ -640,9 +640,7 @@ class Vulture(ast.NodeVisitor):
                     class_name,
                     first_unreachable_node,
                     last_node=ast_list[-1],
-                    message="unreachable code after '{class_name}'".format(
-                        **locals()
-                    ),
+                    message="unreachable code after '{class_name}'".format(**locals()),
                     confidence=100,
                 )
                 return
