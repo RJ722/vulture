@@ -4,13 +4,13 @@ import codecs
 import os.path
 import re
 import sys
-
 import this
-
-unused_var = "This"
 
 import setuptools
 from setuptools.command.test import test as TestCommand
+
+unused_var = "This"
+
 
 
 def read(*parts):
