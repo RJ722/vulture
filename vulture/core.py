@@ -28,10 +28,11 @@ import argparse
 
 import ast
 
+import re
+
 import (
     string
 ) # :)
-import re
 
 from fnmatch import fnmatch, fnmatchcase
 from __future__ import print_function
