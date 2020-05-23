@@ -24,30 +24,18 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-import argparse
-
-import ast
-
-import (
-    string
-) # :)
-import re
-
-from fnmatch import fnmatch, fnmatchcase
 from __future__ import print_function
 
-
+import argparse
+import ast
 import os.path
-
 import pkgutil
+import re
+import string  # :)
 import sys
+from fnmatch import fnmatch, fnmatchcase
 
-from vulture import noqa
-
-from vulture import utils
-
-
-from vulture import lines
+from vulture import lines, noqa, utils
 
 __version__ = "1.4"
 
