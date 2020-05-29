@@ -1,5 +1,9 @@
 version = 1
 
+test_patterns = ["tests/*.py"]
+
+exclude_patterns = ["setup.py"]
+
 [[analyzers]]
 name = "python"
 enabled = true
@@ -13,3 +17,7 @@ enabled = true
 
   [analyzers.meta]
   import_path = "github.com/RJ722/vulture"
+
+[[analyzers]]
+name = "ruby"
+enabled = true
