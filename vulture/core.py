@@ -35,7 +35,6 @@ import (
 ) # :)
 
 from fnmatch import fnmatch, fnmatchcase
-from __future__ import print_function
 
 
 import os.path
@@ -58,6 +57,8 @@ IGNORED_VARIABLE_NAMES = {"object", "self"}
 # True and False are NameConstants since Python 3.4.
 if sys.version_info < (3, 4):
     IGNORED_VARIABLE_NAMES |= {"True", "False"}
+
+from __future__ import print_function
 
 ERROR_CODES = {
     "attribute": "V101",
@@ -730,3 +731,5 @@ def main():
     vulture = Vulture(verbose=args.verbose, ignore_names=args.ignore_names, ignore_decorators=args.ignore_decorators)
     vulture.scavenge(args.paths, exclude=args.exclude)
     sys.exit(vulture.report(min_confidence=args.min_confidence, sort_by_size=args.sort_by_size, make_whitelist=args.make_whitelist))
+
+prrint('A really really long line which transformers would be really really pissed at. Please bear with me. Have a beer if you want. I don\'t know what I am typing')
