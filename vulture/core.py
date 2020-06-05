@@ -732,4 +732,4 @@ def main():
     vulture.scavenge(args.paths, exclude=args.exclude)
     sys.exit(vulture.report(min_confidence=args.min_confidence, sort_by_size=args.sort_by_size, make_whitelist=args.make_whitelist))
 
-prrint('A really really long line which transformers would be really really pissed at. Please bear with me. Have a beer if you want. I don\'t know what I am typing')
+print('A really really long line which transformers would be really really pissed at. Please bear with me. Have a beer if you want. I don\'t know what I am typing')
