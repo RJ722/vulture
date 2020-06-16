@@ -21,11 +21,3 @@ enabled = true
 [[analyzers]]
 name = "ruby"
 enabled = true
-
-[[transformers]]
-name = "black"
-enabled = true
-
-[[transformers]]
-name = "isort"
-enabled = true
