@@ -5,7 +5,6 @@ import subprocess
 import sys
 
 import pytest
-
 from vulture import core
 
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -27,7 +26,9 @@ def call_vulture(args, **kwargs):
 def check(items_or_names, expected_names):
     """items_or_names must be a collection of Items or a set of strings."""
     try:
-        assert sorted(item.name for item in items_or_names) == sorted(expected_names)
+        assert sorted(item.name for item in items_or_names) == sorted(
+            expected_names
+        )
     except AttributeError:
         assert items_or_names == set(expected_names)
 
