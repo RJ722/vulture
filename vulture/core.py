@@ -727,6 +727,7 @@ def _parse_args():
 
 
 def main():
+    print('vulture init')
     args = _parse_args()
     vulture = Vulture(verbose=args.verbose, ignore_names=args.ignore_names, ignore_decorators=args.ignore_decorators)
     vulture.scavenge(args.paths, exclude=args.exclude)
